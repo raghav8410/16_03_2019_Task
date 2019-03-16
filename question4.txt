@@ -1,0 +1,38 @@
+using System;
+using System.Collections.Generic;
+using System.Dynamic;
+
+public class User
+{
+    public IDictionary<string, string> keyValuePairs { get; set; }
+    public string firstName { get; set; }
+    public string lastName { get; set; }
+    public string dob { get; set; }
+    public User(string firstName,string lastName,string dob, IDictionary<string, string> keyValuePairs)
+    {
+        this.keyValuePairs = keyValuePairs;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dob = dob;
+        keyValuePairs.Add("First Name", firstName);
+        keyValuePairs.Add("Last Name", lastName);
+        keyValuePairs.Add("DOB", dob);
+    }
+}
+
+public class UserExampleTest
+{
+    public static void Main()
+    {
+        IDictionary<string, string> keyValuePairs = new Dictionary<string, string>();
+        User user = new User("raghav", "garg", "10", keyValuePairs);
+        dynamic employee = new ExpandoObject();
+
+        keyValuePairs.Add("Address", employee.address = "Ghaziabad");
+
+        foreach (var property in keyValuePairs)
+        {
+            Console.WriteLine(property.Key + " " + property.Value);
+        }
+    }
+}

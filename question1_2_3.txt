@@ -1,0 +1,176 @@
+using System;
+
+namespace _16_03_2019_Task
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Program p = new Program();
+            p.ValidateInputDateWithCurrentDate();
+            p.WeekDayOfParticularDate();
+            p.DatatypeInOneArray();
+        }
+
+        public void ValidateInputDateWithCurrentDate()
+        {
+            Console.WriteLine("For Current Date Validation");
+            int wantToContinue = 0;
+            do
+            {
+                Console.WriteLine("Enter the Date");
+                Int32.TryParse(Console.ReadLine(), out int date);
+
+                Console.WriteLine("Enter the Month");
+                Int32.TryParse(Console.ReadLine(), out int month);
+
+                Console.WriteLine("Enter the Year");
+                Int32.TryParse(Console.ReadLine(), out int year);
+
+                try
+                {
+                    DateTime inputDate = new DateTime(year, month, date);
+
+                    DateTime currentDate = DateTime.Now;
+                    if (currentDate.Day == date && currentDate.Month == month && currentDate.Year == year)
+                    {
+                        string monthName = inputDate.ToString("MMMMM");
+                        Console.WriteLine("Input Date: " + inputDate.DayOfWeek + ", " + monthName + " " + inputDate.Day + ", " + inputDate.Year);
+                        Console.WriteLine("Current Date: " + currentDate.DayOfWeek + ", " + monthName + " " + currentDate.Day + ", " + currentDate.Year);
+                        Console.WriteLine();
+                    }
+                    else
+                    {
+                        Console.WriteLine("The Input Date in not equal to Current Date.");
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                Console.WriteLine("Press 1 to continue:");
+                Int32.TryParse(Console.ReadLine(), out wantToContinue);
+            }
+            while (wantToContinue == 1);
+        }
+
+        public void WeekDayOfParticularDate()
+        {
+            Console.WriteLine("For Day of particular Date");
+            int wantToContinue = 0;
+            do
+            {
+                Console.WriteLine("Enter the Date");
+                Int32.TryParse(Console.ReadLine(), out int date);
+
+                Console.WriteLine("Enter the Month");
+                Int32.TryParse(Console.ReadLine(), out int month);
+
+                Console.WriteLine("Enter the Year");
+                Int32.TryParse(Console.ReadLine(), out int year);
+
+                try
+                {
+                    DateTime inputDate = new DateTime(year, month, date);
+                    Console.WriteLine(inputDate.DayOfWeek);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                Console.WriteLine("Press 1 to continue:");
+                Int32.TryParse(Console.ReadLine(), out wantToContinue);
+            }
+            while (wantToContinue == 1);
+        }
+
+        public void DatatypeInOneArray()
+        {
+            int wantToContinue = 0;
+            Console.WriteLine("All datatype in a single array");
+            Console.WriteLine("Enter the number of elements:");
+            bool isValidInput;
+            do
+            {
+                isValidInput = Int32.TryParse(Console.ReadLine(), out int numberOfElements);
+                if (isValidInput)
+                {
+                    object[] arrayOfMixDataType = new object[numberOfElements];
+                    int limit = numberOfElements - 1;
+                    for (int i = 0; i < numberOfElements; i++)
+                    {
+                        do
+                        {
+                            Console.WriteLine("Press the DateType option:");
+                            Console.WriteLine("Press 1 for Int.");
+                            Console.WriteLine("Press 2 for String.");
+                            Console.WriteLine("Press 3 for Float.");
+                            Console.WriteLine("Press 4 for Char.");
+
+                            bool isValidConversion = Int32.TryParse(Console.ReadLine(), out int dataTypeOption);
+                            if (isValidConversion)
+                            {
+                                switch (dataTypeOption)
+                                {
+                                    case 1:
+                                        do
+                                        {
+                                            Console.WriteLine("Enter the Int Data");
+                                            isValidInput = Int32.TryParse(Console.ReadLine(), out int intType);
+                                            arrayOfMixDataType.SetValue(intType, i);
+                                            Console.WriteLine();
+                                        }
+                                        while (!isValidInput);
+                                        break;
+
+                                    case 2:
+                                        Console.WriteLine("Enter the String Data");
+                                        string stringType = Console.ReadLine();
+                                        arrayOfMixDataType.SetValue(stringType, i);
+                                        Console.WriteLine();
+                                        break;
+
+                                    case 3:
+                                        do
+                                        {
+                                            Console.WriteLine("Enter the Float Data");
+                                            isValidInput = float.TryParse(Console.ReadLine(), out float floatType);
+                                            arrayOfMixDataType.SetValue(floatType, i);
+                                            Console.WriteLine();
+                                        }
+                                        while (!isValidInput);
+                                        break;
+
+                                    case 4:
+                                        do
+                                        {
+                                            Console.WriteLine("Enter the Char Data");
+                                            isValidInput = char.TryParse(Console.ReadLine(), out char charType);
+                                            arrayOfMixDataType.SetValue(charType, i);
+                                            Console.WriteLine();
+                                        }
+                                        while (!isValidInput);
+                                        break;
+                                }
+                            }
+                            else
+                                Console.WriteLine("Wrong Selection.");
+                        }
+                        while (numberOfElements == limit);
+                    }
+                    Console.WriteLine("The data in the array is:");
+                    foreach (object data in arrayOfMixDataType)
+                    {
+                        Console.WriteLine(data);
+                    }
+                }
+                else
+                    Console.WriteLine("Wrong Input.\nProgram End.");
+
+                Console.WriteLine("Press 1 to continue:");
+                Int32.TryParse(Console.ReadLine(), out wantToContinue);
+            }
+            while (wantToContinue == 1);
+        }
+    }
+}
